@@ -6,11 +6,13 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { QuestionsService } from '@root/modules/questions/questions.service';
 import { AskQuestionInput } from '@root/modules/questions/dto/ask-question.input';
 import { AskQuestionOutput } from '@root/modules/questions/dto/ask-question.output';
 
 @Controller('questions')
+@ApiTags('Questions')
 @UsePipes(new ValidationPipe({ forbidUnknownValues: true }))
 export class QuestionsController {
   constructor(
@@ -19,6 +21,8 @@ export class QuestionsController {
   ) {}
 
   @Post('/')
+  @ApiOperation({ summary: 'Get answer data.' })
+  @ApiOkResponse({ type: AskQuestionOutput, isArray: true })
   public askQuestion(
     @Body() input: AskQuestionInput,
   ): Promise<AskQuestionOutput[]> {
