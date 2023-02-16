@@ -10,7 +10,7 @@ import { HttpService } from '@nestjs/axios';
 import { InferenceRunnerConfiguration } from '@root/modules/inference-runner/inference-runner.config';
 import { INFERENCE_AUTH_HEADER_NAME } from '@root/modules/inference-runner/constants';
 import { AskOutput } from '@root/modules/inference-runner/dto/ask.output';
-import { AskChunkDto } from '@root/modules/inference-runner/dto/ask-chunk.dto';
+import { AnswerChunkDto } from '@root/modules/inference-runner/dto/answer-chunk.dto';
 
 @Injectable()
 export class InferenceRunnerService {
@@ -35,7 +35,7 @@ export class InferenceRunnerService {
     this.defaultHeaders = {};
   }
 
-  public async getAnswerChunks(question: string): Promise<AskChunkDto[]> {
+  public async getAnswerChunks(question: string): Promise<AnswerChunkDto[]> {
     try {
       await this.authorize();
       const data = await this.ask(question);
@@ -57,8 +57,10 @@ export class InferenceRunnerService {
       headers: this.defaultHeaders,
     };
 
+    const url = `${this.apiUrl}/ask`;
+
     const { data } = await firstValueFrom(
-      this.httpService.post<AskOutput>(this.apiUrl, payload, requestConfig),
+      this.httpService.post<AskOutput>(url, payload, requestConfig),
     );
 
     return data;

@@ -1,5 +1,5 @@
-import { AskChunkDto } from '@root/modules/inference-runner/dto/ask-chunk.dto';
+import { AnswerChunkDto } from '@root/modules/inference-runner/dto/answer-chunk.dto';
 
 export class AskOutput {
-  chunks: AskChunkDto[];
+  chunks: AnswerChunkDto[];
 }
