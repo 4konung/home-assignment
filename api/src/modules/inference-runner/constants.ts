@@ -1,1 +1,1 @@
-export const INFERENCE_AUTH_HEADER_NAME = 'X-API-Key';
+export const INFERENCE_X_HEADER_NAME = 'X-API-Key';

@@ -8,7 +8,7 @@ import { firstValueFrom } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { InferenceRunnerConfiguration } from '@root/modules/inference-runner/inference-runner.config';
-import { INFERENCE_AUTH_HEADER_NAME } from '@root/modules/inference-runner/constants';
+import { INFERENCE_X_HEADER_NAME } from '@root/modules/inference-runner/constants';
 import { AskOutput } from '@root/modules/inference-runner/dto/ask.output';
 import { AnswerChunkDto } from '@root/modules/inference-runner/dto/answer-chunk.dto';
 
@@ -67,7 +67,7 @@ export class InferenceRunnerService {
   }
 
   private authorize() {
-    this.defaultHeaders[INFERENCE_AUTH_HEADER_NAME] =
+    this.defaultHeaders[INFERENCE_X_HEADER_NAME] =
       this.apiKeys[this.keyIdx % this.apiKeys.length];
     this.keyIdx += 1;
   }
