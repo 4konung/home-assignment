@@ -1,3 +1,4 @@
+import jwtDecode from 'jwt-decode';
 import {
   BadRequestException,
   Inject,
@@ -16,6 +17,7 @@ export class ChunkHolderService {
   private readonly apiUrl: string;
   private readonly apiKeys: string[];
   private keyIdx: number;
+  private authToken?: { expiresAt: number; token: string };
   private readonly defaultHeaders: Record<string, string>;
   private readonly logger = new Logger(ChunkHolderService.name);
 
@@ -57,17 +59,30 @@ export class ChunkHolderService {
   }
 
   private async authorize() {
-    const headers = {
-      [CHUNKS_X_HEADER_NAME]: this.apiKeys[this.keyIdx % this.apiKeys.length],
-    };
-    this.keyIdx += 1;
+    const nowInSeconds = Math.floor(Date.now() / 1000);
 
-    const url = `${this.apiUrl}/auth/generate-token`;
+    if (
+      !this?.authToken?.expiresAt ||
+      this.authToken.expiresAt < nowInSeconds
+    ) {
+      this.authToken = undefined;
 
-    const { data } = await firstValueFrom(
-      this.httpService.post<GenerateTokenDto>(url, undefined, { headers }),
-    );
+      const headers = {
+        [CHUNKS_X_HEADER_NAME]: this.apiKeys[this.keyIdx % this.apiKeys.length],
+      };
+      this.keyIdx += 1;
 
-    this.defaultHeaders['Authorization'] = data.token;
+      const url = `${this.apiUrl}/auth/generate-token`;
+
+      const { data } = await firstValueFrom(
+        this.httpService.post<GenerateTokenDto>(url, undefined, { headers }),
+      );
+
+      const decoded = jwtDecode(data.token) as { exp: number };
+
+      this.authToken = { token: data.token, expiresAt: decoded.exp };
+    }
+
+    this.defaultHeaders['Authorization'] = this?.authToken?.token;
   }
 }
