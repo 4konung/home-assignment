@@ -6,9 +6,8 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    cors: {
-      origin: '*',
-    },
+    bufferLogs: true,
+    cors: true,
   });
 
   const appConfig = app.get(ConfigService).get<AppConfiguration>('app');
