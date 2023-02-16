@@ -4,6 +4,7 @@ import { ConfigModule as NestConfigModule } from '@nestjs/config';
 
 import { appConfiguration } from '@root/common/config/app.config';
 import { inferenceRunnerConfig } from '@root/modules/inference-runner/inference-runner.config';
+import { chunkHolderConfig } from '@root/modules/chunk-holder/chunk-holder.config';
 
 config();
 
@@ -11,7 +12,7 @@ config();
   imports: [
     NestConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfiguration, inferenceRunnerConfig],
+      load: [appConfiguration, inferenceRunnerConfig, chunkHolderConfig],
     }),
   ],
 })
