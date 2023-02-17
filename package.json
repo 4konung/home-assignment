@@ -1,0 +1,14 @@
+{
+  "name": "home-assignment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker-compose -f ./docker-compose.yml up -d",
+    "shutdown": "docker-compose -f ./docker-compose.yml down"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "description": ""
+}
+
