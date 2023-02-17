@@ -1,0 +1,46 @@
+Home Assignment
+Main Goal
+This assignment requires working with 3-rd party APIs, aggregations, and logic in the backend and displaying results in the frontend.
+Requirements
+1. Basic UI (feel free to choose whatever framework you want) - following the provided wireframe.
+2. Webapp API micro-service (feel free to choose whatever framework you want) following the provided architecture and sequence diagram
+3. The list of answers should be of chunks with confidence above (and including) 70%
+4. The chunks are in HTML format and should be rendered correctly
+5. Code shared in Github/GitLab/BitBucket
+Optional
+* Backend framework: Express & Typescript/FastAPI
+* UI framework: React
+* Resiliency patterns
+* Dockerized
+* Safe DOM rendering
+* Loading state
+* Login
+Definition Of Done
+A user can ask a question in the new UI and get relevant answers (with confidence of 70% or above).
+Limitations
+* The given micro-services (Inference Runner & Chunk Holder) can not be changed.
+* You must use the provided API keys.
+* The data is mocked, so when sending not expected data (question/chunk ID) - do not expect an actual response.
+List of questions
+* How do I remove a teammate?
+* What is the meaning of life?
+* What should I eat for breakfast?
+Documents
+Architecture
+  
+
+Sequence Diagram
+  
+
+API Documentation
+* Inference Runner:
+   * OpenAPI/Swagger: https://inference-runner.hw.ask-ai.co/docs 
+   * Auth method: One of the API keys in the “X-API-Key” header
+   * API keys:
+  
+* Chunk Holder
+   * OpenAPI/Swagger: https://chunk-holder.hw.ask-ai.co/docs/
+   * Auth method: Short-lived access JWT token (via the “Authorization” header). To generate the short-lived access token, you need to call the generate token endpoint should be called (docs) with one of the API keys in the “X-API-Key” header
+   * API keys:
+
+UI Wireframe
